@@ -27,3 +27,13 @@ class Subscription(models.Model):
     def __str__(self):
         return self.name
 
+
+class Review(models.Model):
+    comment=models.TextField()
+    rate=models.FloatField()
+    movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.name
