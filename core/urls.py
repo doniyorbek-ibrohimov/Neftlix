@@ -10,11 +10,12 @@ router=DefaultRouter()
 router.register('actors',ActorModelViewSet)
 router.register('movies',MovieModelViewSet)
 router.register('reviews',ReviewModelViewSet)
+router.register('comments',CommentModelViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include(router.urls)),
-    path('get-token',obtain_auth_token),
+    path('get-token/',obtain_auth_token),
 ]
 urlpatterns +=[
     path('register/',RegisterAPIView.as_view()),

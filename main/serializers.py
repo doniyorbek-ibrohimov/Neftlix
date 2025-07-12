@@ -60,7 +60,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=('id','username','password''phone','first_name','last_name','date_joined')
+        fields=('id','username','password','phone','first_name','last_name','date_joined')
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)

@@ -235,7 +235,7 @@ class CommentModelViewSet(ModelViewSet):
 
     def perform_destroy(self, instance):
         if instance.user != self.request.user:
-            raise serializers.ValidationError("You are not allowed")
+            raise serializers.ValidationError("You are not allowed!")
         instance.delete()
 
 
