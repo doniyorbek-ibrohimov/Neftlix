@@ -126,9 +126,10 @@
 #
 #
 #
-
+from django.template.context_processors import request
 from rest_framework import status
 from rest_framework import filters
+from rest_framework.views import APIView
 import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
@@ -210,4 +211,31 @@ class ReviewModelViewSet(ModelViewSet):
     search_fields=['user__name']
     filterset_class=ReviewFilter
     ordering_fields=['rate','created_at']
+
+class RegisterAPIView(APIView):
+    def post(self,request):
+        serializer=RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class CommentModelViewSet(ModelViewSet):
+    queryset = Comment.objects.all()
+
+    def get_serializer_class(self):
+        if self.action=='post':
+            return CommentCreateSerializer
+        return CommentSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(
+            user=self.request.user
+        )
+
+    def perform_destroy(self, instance):
+        if instance.user != self.request.user:
+            raise serializers.ValidationError("You are not allowed")
+        instance.delete()
+
 

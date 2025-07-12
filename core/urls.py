@@ -1,4 +1,4 @@
-
+from rest_framework.authtoken.views import obtain_auth_token
 from django.contrib import admin
 from django.urls import path,include
 from rest_framework.routers import DefaultRouter
@@ -14,4 +14,10 @@ router.register('reviews',ReviewModelViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include(router.urls)),
+    path('get-token',obtain_auth_token),
 ]
+urlpatterns +=[
+    path('register/',RegisterAPIView.as_view()),
+]
+
+
