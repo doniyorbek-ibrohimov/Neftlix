@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
@@ -7,10 +8,14 @@ class User(AbstractUser):
 
 
 class Actor(models.Model):
-    name=models.CharField(max_length=100)
-    country=models.CharField(max_length=100)
-    gender=models.CharField(max_length=100)
-    birthdate=models.DateField()
+    name=models.CharField(_("name"),max_length=100)
+    country=models.CharField(_("country"),max_length=100)
+    gender=models.CharField(_("gender"),max_length=100)
+    birthdate=models.DateField(_("birthdate"))
+
+    class Meta:
+        verbose_name=_('Actor')
+        verbose_name_plural=_('Actors')
 
     def __str__(self):
         return self.name

@@ -126,7 +126,9 @@
 #
 #
 #
-from django.template.context_processors import request
+from django.shortcuts import render
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 from rest_framework import status
 from rest_framework import filters
 from rest_framework.views import APIView
@@ -149,6 +151,8 @@ class ActorModelViewSet(ModelViewSet):
     filterset_fields=['country','gender']
     ordering_fields=['name','birthdate']
     ordering=['name']
+
+
 
 
 class MovieModelViewSet(ModelViewSet):
@@ -237,5 +241,11 @@ class CommentModelViewSet(ModelViewSet):
         if instance.user != self.request.user:
             raise serializers.ValidationError("You are not allowed!")
         instance.delete()
+
+
+
+
+def example_view(request):
+    return render(request,'example.html')
 
 
